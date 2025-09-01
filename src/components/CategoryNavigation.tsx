@@ -91,7 +91,7 @@ export default function CategoryNavigation() {
                 </div>
               </motion.div>
               
-              <span className="text-sm font-medium text-gray-800 text-center group-hover:text-blue-600 transition-colors">
+              <span className="text-sm font-medium text-black text-center group-hover:text-blue-600 transition-colors">
                 {category.name}
               </span>
             </motion.div>

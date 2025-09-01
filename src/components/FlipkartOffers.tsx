@@ -157,7 +157,7 @@ export default function FlipkartOffers() {
   return (
     <motion.div 
       ref={containerRef}
-      className="min-h-screen bg-gradient-to-br from-orange-50 via-red-100 to-pink-100 py-12 sm:py-16 lg:py-20"
+      className="min-h-screen bg-white py-12 sm:py-16 lg:py-20"
       style={{ opacity }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -171,7 +171,7 @@ export default function FlipkartOffers() {
           viewport={{ once: true }}
         >
           <motion.h2 
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold mb-4 sm:mb-6 gradient-flipkart-text"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold mb-4 sm:mb-6 text-black"
             style={{ y }}
           >
             Flipkart Offers
@@ -183,7 +183,7 @@ export default function FlipkartOffers() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="mt-6 sm:mt-8 bg-gradient-to-r from-red-500 to-orange-600 text-white px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full inline-block font-bold text-sm sm:text-base lg:text-lg shadow-xl animate-pulse-glow"
+            className="mt-6 sm:mt-8 bg-yellow-500 text-black px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg inline-block font-bold text-sm sm:text-base lg:text-lg shadow-xl animate-pulse-glow"
           >
             🔥 LIVE NOW - 10,000+ Deals Active
           </motion.div>
@@ -198,7 +198,7 @@ export default function FlipkartOffers() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="h-[350px] sm:h-[450px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-white/80 backdrop-blur-sm border border-orange-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
+            className="h-[350px] sm:h-[450px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-blue-50 border border-blue-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
           >
             <Suspense fallback={<LoadingFallback />}>
               <Canvas
@@ -237,17 +237,17 @@ export default function FlipkartOffers() {
                   x: 5,
                   transition: { duration: 0.3 }
                 }}
-                className="group p-4 sm:p-6 rounded-xl lg:rounded-2xl bg-white/90 backdrop-blur-sm border border-orange-200 hover:border-red-400 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                className="group p-4 sm:p-6 rounded-xl lg:rounded-2xl bg-white border border-gray-200 hover:border-yellow-500 hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-start space-x-3 sm:space-x-4">
                   <div className="text-2xl sm:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                     {offer.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className={`text-lg sm:text-xl font-bold bg-gradient-to-r ${offer.color} bg-clip-text text-transparent mb-1 sm:mb-2 truncate`}>
+                    <h3 className="text-lg sm:text-xl font-bold text-black mb-1 sm:mb-2 truncate">
                       {offer.title}
                     </h3>
-                    <p className="text-sm sm:text-base text-gray-600 group-hover:text-gray-800 transition-colors duration-300 mb-2 sm:mb-3 line-clamp-2">
+                    <p className="text-sm sm:text-base text-black/70 group-hover:text-black transition-colors duration-300 mb-2 sm:mb-3 line-clamp-2">
                       {offer.description}
                     </p>
                     <div className="space-y-1">
@@ -318,7 +318,7 @@ export default function FlipkartOffers() {
             >
               <div className="text-2xl sm:text-3xl lg:text-4xl mb-2 sm:mb-4">{stat.icon}</div>
               <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-red-600 mb-1 sm:mb-2">{stat.value}</div>
-              <div className="text-xs sm:text-sm lg:text-base text-gray-600">{stat.label}</div>
+              <div className="text-xs sm:text-sm lg:text-base text-black/60">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>

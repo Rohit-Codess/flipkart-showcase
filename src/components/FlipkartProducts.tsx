@@ -218,7 +218,7 @@ export default function FlipkartProducts() {
   return (
     <motion.div 
       ref={containerRef}
-      className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 py-12 sm:py-16 lg:py-20"
+      className="min-h-screen bg-white py-12 sm:py-16 lg:py-20"
       style={{ opacity }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -232,7 +232,7 @@ export default function FlipkartProducts() {
           viewport={{ once: true }}
         >
           <motion.h2 
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold mb-4 sm:mb-6 gradient-flipkart-text"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold mb-4 sm:mb-6 text-black"
             style={{ y }}
           >
             Shop by Category
@@ -244,7 +244,7 @@ export default function FlipkartProducts() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="mt-6 sm:mt-8 bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-full inline-block font-bold text-sm sm:text-base lg:text-lg"
+            className="mt-6 sm:mt-8 bg-yellow-500 text-black px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg inline-block font-bold text-sm sm:text-base lg:text-lg shadow-lg"
           >
             🎉 Big Billion Days LIVE - Up to 80% Off + Extra 10% Bank Discount
           </motion.div>
@@ -259,13 +259,13 @@ export default function FlipkartProducts() {
           viewport={{ once: true }}
         >
           <motion.h3 
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center text-gray-800"
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center text-black"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Featured Brands on <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Flipkart</span>
+            Featured Brands on <span className="text-blue-600">Flipkart</span>
           </motion.h3>
           
           {/* Horizontal Scrolling Brands */}
@@ -287,7 +287,7 @@ export default function FlipkartProducts() {
                     </div>
                     
                     {/* Brand Name */}
-                    <h4 className="text-sm sm:text-base lg:text-lg font-bold text-gray-800 mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors duration-300 truncate">
+                    <h4 className="text-sm sm:text-base lg:text-lg font-bold text-black mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors duration-300 truncate">
                       {brand.name}
                     </h4>
                     
@@ -306,7 +306,7 @@ export default function FlipkartProducts() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
-                className="text-xs sm:text-sm text-gray-500 flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full"
+                className="text-xs sm:text-sm text-black/50 flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full"
               >
                 <span>👈</span> Scroll to see more brands <span>👉</span>
               </motion.p>
@@ -322,7 +322,7 @@ export default function FlipkartProducts() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-white/80 backdrop-blur-sm border border-gray-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
+            className="h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-blue-50 border border-blue-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
           >
             <Suspense fallback={<LoadingFallback />}>
               <Canvas
@@ -361,24 +361,24 @@ export default function FlipkartProducts() {
                   x: 5,
                   transition: { duration: 0.3 }
                 }}
-                className="group p-4 sm:p-6 rounded-xl lg:rounded-2xl bg-white/90 backdrop-blur-sm border border-gray-200 hover:border-blue-500 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                className="group p-4 sm:p-6 rounded-xl lg:rounded-2xl bg-white border border-gray-200 hover:border-blue-500 hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-start space-x-3 sm:space-x-4">
                   <div className="text-2xl sm:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                     {category.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-300 mb-1 sm:mb-2 truncate">
+                    <h3 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors duration-300 mb-1 sm:mb-2 truncate">
                       {category.name}
                     </h3>
-                    <p className="text-sm sm:text-base text-gray-600 group-hover:text-gray-800 transition-colors duration-300 mb-2 line-clamp-2">
+                    <p className="text-sm sm:text-base text-black/70 group-hover:text-black transition-colors duration-300 mb-2 line-clamp-2">
                       {category.description}
                     </p>
                     <div className="space-y-1">
-                      <div className="text-xs sm:text-sm text-orange-600 font-semibold">
+                      <div className="text-xs sm:text-sm text-yellow-600 font-semibold">
                         {category.offers}
                       </div>
-                      <div className="text-xs sm:text-sm text-gray-500">
+                      <div className="text-xs sm:text-sm text-black/60">
                         {category.products}
                       </div>
                     </div>
@@ -405,10 +405,10 @@ export default function FlipkartProducts() {
               <motion.a
                 whileHover={{ 
                   scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+                  boxShadow: "0 20px 40px rgba(255, 193, 7, 0.4)"
                 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl lg:rounded-2xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-blue-500/50 transition-all duration-300 btn-hover-lift" href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" target="_blank" rel="noopener noreferrer"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg shadow-xl hover:shadow-yellow-500/50 transition-all duration-300 btn-hover-lift" href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" target="_blank" rel="noopener noreferrer"
               >
                 Explore All Categories
               </motion.a>

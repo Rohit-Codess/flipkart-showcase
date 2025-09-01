@@ -32,7 +32,7 @@ export default function FlipkartEcosystem() {
   ]
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 py-8 sm:py-12 lg:py-16">
+    <div className="bg-white py-8 sm:py-12 lg:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
@@ -44,9 +44,9 @@ export default function FlipkartEcosystem() {
                   viewport={{ once: true }}
                 >
                   <motion.h2 
-                    className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold mb-4 sm:mb-6 gradient-flipkart-text"
+                    className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold mb-4 sm:mb-6 text-black"
                   >
-                    Complete Flipkart Ecosystem
+                    Complete <span className="text-blue-600">Flipkart</span> Ecosystem
                   </motion.h2>
                   
                 </motion.div>
@@ -71,7 +71,7 @@ export default function FlipkartEcosystem() {
                 y: -2,
                 transition: { duration: 0.3 }
               }}
-              className="group bg-white rounded-xl lg:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-gray-200"
+              className="group bg-white rounded-xl lg:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-500"
             >
               <div className="text-center">
                 {/* Icon */}
@@ -80,12 +80,12 @@ export default function FlipkartEcosystem() {
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-base sm:text-lg font-bold text-black mb-2 group-hover:text-blue-600 transition-colors duration-300">
                   {service.title}
                 </h3>
                 
                 {/* Description */}
-                <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
+                <p className="text-sm text-black/70 leading-relaxed group-hover:text-black transition-colors duration-300">
                   {service.description}
                 </p>
               </div>
@@ -151,7 +151,7 @@ export default function FlipkartEcosystem() {
                 whileTap={{ scale: 0.98 }}
                 className="group bg-white text-blue-600 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base lg:text-lg shadow-xl hover:shadow-white/30 transition-all duration-300 flex items-center space-x-2 w-full sm:w-auto"
               >
-                <span className="text-lg sm:text-xl group-hover:scale-110 transition-transform duration-300">📱</span>
+                {/* <span className="text-lg sm:text-xl group-hover:scale-110 transition-transform duration-300">📱</span> */}
                 <a href="https://www.flipkart.com/mobile-apps?otracker=ch_vn_mobile_apps" target="_blank" rel="noopener noreferrer">Download App</a>
               </motion.button>
               

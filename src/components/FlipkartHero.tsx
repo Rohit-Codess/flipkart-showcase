@@ -162,12 +162,12 @@ export default function FlipkartHero() {
 
   return (
     <div 
-      className="relative min-h-screen bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 overflow-hidden"
+      className="relative min-h-screen bg-white overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Flipkart Brand Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-grid-pattern"></div>
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100"></div>
       </div>
 
       {/* Content Overlay */}
@@ -180,7 +180,7 @@ export default function FlipkartHero() {
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="text-white space-y-6 lg:space-y-8 order-2 lg:order-1"
+              className="text-black space-y-6 lg:space-y-8 order-2 lg:order-1"
             >
               {/* Flipkart Logo */}
               <motion.div
@@ -189,7 +189,7 @@ export default function FlipkartHero() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="flex items-center space-x-3 sm:space-x-4 mb-6 lg:mb-8"
               >
-                <div className="bg-white p-2 sm:p-3 lg:p-4 rounded-xl lg:rounded-2xl">
+                <div className="bg-blue-500 p-2 sm:p-3 lg:p-4 rounded-xl lg:rounded-2xl shadow-lg">
                   <Image 
                     src="/logo.png" 
                     alt="Flipkart Logo" 
@@ -199,8 +199,8 @@ export default function FlipkartHero() {
                   />
                 </div>
                 <div>
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Flipkart</h1>
-                  <p className="text-blue-200 text-sm sm:text-base">The Big Billion Days</p>
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black">Flipkart</h1>
+                  <p className="text-blue-600 text-sm sm:text-base font-medium">The Big Billion Days</p>
                 </div>
               </motion.div>
 
@@ -209,16 +209,16 @@ export default function FlipkartHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-6xl font-bold leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-6xl font-bold leading-tight text-black">
                   Experience Products in
                 </h2>
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                   Stunning 3D
                 </h3>
               </motion.div>
               
               <motion.p 
-                className="text-base sm:text-lg lg:text-xl xl:text-2xl text-blue-100 leading-relaxed"
+                className="text-base sm:text-lg lg:text-xl xl:text-2xl text-black/70 leading-relaxed"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -236,10 +236,10 @@ export default function FlipkartHero() {
                 <motion.a
                   whileHover={{ 
                     scale: 1.02,
-                    boxShadow: "0 20px 40px rgba(255, 165, 0, 0.4)"
+                    boxShadow: "0 20px 40px rgba(255, 193, 7, 0.4)"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-base lg:text-lg shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 btn-hover-lift inline-flex items-center justify-center" href="https://www.flipkart.com" target="_blank" rel="noopener noreferrer"
+                  className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-lg font-bold text-base lg:text-lg shadow-xl hover:shadow-yellow-500/50 transition-all duration-300 btn-hover-lift inline-flex items-center justify-center" href="https://www.flipkart.com" target="_blank" rel="noopener noreferrer"
                 >
                   Shop Now
                 </motion.a>
@@ -247,10 +247,10 @@ export default function FlipkartHero() {
                 <motion.a
                   whileHover={{ 
                     scale: 1.02,
-                    backgroundColor: "rgba(255, 255, 255, 0.1)"
+                    backgroundColor: "rgba(59, 130, 246, 0.1)"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  className="border-2 border-white text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-base lg:text-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300" href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" target="_blank" rel="noopener noreferrer"
+                  className="border-2 border-blue-500 text-blue-600 hover:text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-lg font-semibold text-base lg:text-lg hover:bg-blue-50 transition-all duration-300" href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" target="_blank" rel="noopener noreferrer"
                 >
                   Explore Categories
                 </motion.a>
@@ -283,7 +283,7 @@ export default function FlipkartHero() {
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1.2, delay: 0.5 }}
-              className="h-[400px] sm:h-[500px] lg:h-[600px] xl:h-[700px] perspective-500 lg:perspective-1000 order-1 lg:order-2"
+              className="h-[100vh] perspective-500 lg:perspective-1000 order-1 lg:order-2"
               style={{
                 transform: `rotateX(${mousePosition.y * 1}deg) rotateY(${mousePosition.x * 1}deg)`
               }}
