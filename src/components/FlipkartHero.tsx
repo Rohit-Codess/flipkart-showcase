@@ -1,43 +1,34 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, MeshDistortMaterial, Sphere, Box, Text, Environment } from '@react-three/drei'
+import { Float, Sphere, Box, Environment } from '@react-three/drei'
 import { motion } from 'framer-motion'
 import * as THREE from 'three'
+import LoadingFallback from './LoadingFallback'
 
-// Flipkart Product 3D Models
+// Optimized Flipkart Product 3D Models with reduced complexity
 function FlipkartPhone({ position }: { position: [number, number, number] }) {
   const meshRef = useRef<THREE.Group>(null!)
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.3
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.1
+      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.2
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 1.5) * 0.05
     }
   })
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={0.5}>
+    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.3}>
       <group ref={meshRef} position={position}>
-        {/* Phone Body */}
-        <Box args={[1, 2, 0.1]} castShadow>
-          <MeshDistortMaterial color="#1a1a1a" distort={0.05} speed={2} metalness={0.9} roughness={0.1} />
+        {/* Phone Body - Simplified */}
+        <Box args={[1, 2, 0.1]}>
+          <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.2} />
         </Box>
         {/* Screen */}
         <Box args={[0.85, 1.7, 0.02]} position={[0, 0, 0.06]}>
-          <meshStandardMaterial color="#2874f0" emissive="#1e5dc8" emissiveIntensity={0.3} />
+          <meshStandardMaterial color="#2874f0" emissive="#1e5dc8" emissiveIntensity={0.2} />
         </Box>
-        {/* Flipkart Logo */}
-        <Text
-          position={[0, 0.3, 0.07]}
-          fontSize={0.15}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Flipkart
-        </Text>
         {/* Home Button */}
         <Sphere args={[0.05]} position={[0, -0.7, 0.06]}>
           <meshStandardMaterial color="#ffffff" />
@@ -52,17 +43,17 @@ function FlipkartLaptop({ position }: { position: [number, number, number] }) {
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.3
-      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1.5) * 0.15
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2
+      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1) * 0.08
     }
   })
 
   return (
-    <Float speed={1.5} rotationIntensity={2} floatIntensity={0.8}>
+    <Float speed={1} rotationIntensity={1} floatIntensity={0.5}>
       <group ref={meshRef} position={position}>
-        {/* Laptop Screen */}
-        <Box args={[2.5, 1.8, 0.1]} position={[0, 0.5, 0]} castShadow>
-          <MeshDistortMaterial color="#2d3748" distort={0.05} speed={1.5} metalness={0.9} roughness={0.1} />
+        {/* Laptop Screen - Simplified */}
+        <Box args={[2.5, 1.8, 0.1]} position={[0, 0.5, 0]}>
+          <meshStandardMaterial color="#2d3748" metalness={0.7} roughness={0.3} />
         </Box>
         {/* Display */}
         <Box args={[2.3, 1.6, 0.02]} position={[0, 0.5, 0.06]}>
@@ -72,9 +63,9 @@ function FlipkartLaptop({ position }: { position: [number, number, number] }) {
         <Box args={[2.1, 0.3, 0.01]} position={[0, 1, 0.07]}>
           <meshStandardMaterial color="#2874f0" />
         </Box>
-        {/* Keyboard Base */}
+        {/* Keyboard Base - Simplified */}
         <Box args={[2.5, 0.1, 1.8]} position={[0, -0.9, -0.9]}>
-          <MeshDistortMaterial color="#4a5568" distort={0.02} speed={1} metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial color="#4a5568" metalness={0.5} roughness={0.5} />
         </Box>
       </group>
     </Float>
@@ -86,36 +77,26 @@ function FlipkartHeadphones({ position }: { position: [number, number, number] }
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.8) * 0.2
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.08
+      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.1
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.05
     }
   })
 
   return (
-    <Float speed={2.5} rotationIntensity={0.5} floatIntensity={1}>
+    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.6}>
       <group ref={meshRef} position={position}>
-        {/* Left Ear Cup */}
-        <Sphere args={[0.6]} position={[-0.8, 0, 0]} castShadow>
-          <MeshDistortMaterial color="#ff6b6b" distort={0.2} speed={3} metalness={0.3} roughness={0.7} />
+        {/* Left Ear Cup - Simplified */}
+        <Sphere args={[0.6]} position={[-0.8, 0, 0]}>
+          <meshStandardMaterial color="#ff6b6b" metalness={0.2} roughness={0.8} />
         </Sphere>
-        {/* Right Ear Cup */}
-        <Sphere args={[0.6]} position={[0.8, 0, 0]} castShadow>
-          <MeshDistortMaterial color="#ff6b6b" distort={0.2} speed={3} metalness={0.3} roughness={0.7} />
+        {/* Right Ear Cup - Simplified */}
+        <Sphere args={[0.6]} position={[0.8, 0, 0]}>
+          <meshStandardMaterial color="#ff6b6b" metalness={0.2} roughness={0.8} />
         </Sphere>
         {/* Headband */}
         <Box args={[1.8, 0.15, 0.15]} position={[0, 0.7, 0]}>
-          <MeshDistortMaterial color="#333333" distort={0.1} speed={2} metalness={0.8} roughness={0.2} />
+          <meshStandardMaterial color="#333333" metalness={0.6} roughness={0.4} />
         </Box>
-        {/* Brand Logo */}
-        <Text
-          position={[0, 0.8, 0.1]}
-          fontSize={0.1}
-          color="#2874f0"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Flipkart
-        </Text>
       </group>
     </Float>
   )
@@ -126,17 +107,17 @@ function FlipkartWatch({ position }: { position: [number, number, number] }) {
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 1.2) * 0.1
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2.5) * 0.1
+      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.05
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 1.8) * 0.06
     }
   })
 
   return (
-    <Float speed={3} rotationIntensity={1} floatIntensity={0.5}>
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.4}>
       <group ref={meshRef} position={position}>
-        {/* Watch Face */}
-        <Box args={[0.8, 1, 0.3]} castShadow>
-          <MeshDistortMaterial color="#ffd700" distort={0.05} speed={2} metalness={0.9} roughness={0.1} />
+        {/* Watch Face - Simplified */}
+        <Box args={[0.8, 1, 0.3]}>
+          <meshStandardMaterial color="#ffd700" metalness={0.8} roughness={0.2} />
         </Box>
         {/* Screen */}
         <Box args={[0.6, 0.8, 0.02]} position={[0, 0, 0.16]}>
@@ -144,42 +125,26 @@ function FlipkartWatch({ position }: { position: [number, number, number] }) {
         </Box>
         {/* Digital Display */}
         <Box args={[0.5, 0.2, 0.01]} position={[0, 0.2, 0.17]}>
-          <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.3} />
         </Box>
-        {/* Flipkart Logo */}
-        <Text
-          position={[0, -0.2, 0.17]}
-          fontSize={0.05}
-          color="#2874f0"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Flipkart
-        </Text>
       </group>
     </Float>
   )
 }
 
+// Optimized Scene with reduced lighting for better performance
 function Scene() {
   return (
     <>
-      <Environment preset="studio" />
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
-      <pointLight position={[-5, -5, -5]} intensity={0.5} color="#2874f0" />
-      <spotLight position={[0, 10, 0]} angle={0.3} penumbra={1} intensity={2} castShadow />
+      <Environment preset="city" />
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} />
+      <pointLight position={[-3, -3, -3]} intensity={0.3} color="#2874f0" />
       
       <FlipkartPhone position={[-4, 1, 0]} />
       <FlipkartLaptop position={[4, 0, -1]} />
       <FlipkartHeadphones position={[0, -2, 2]} />
       <FlipkartWatch position={[-2, -1, 1]} />
-      
-      {/* Ground plane for shadows */}
-      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]}>
-        <planeGeometry args={[30, 30]} />
-        <shadowMaterial opacity={0.3} />
-      </mesh>
     </>
   )
 }
@@ -263,27 +228,27 @@ export default function FlipkartHero() {
                 transition={{ duration: 0.8, delay: 1.2 }}
                 className="flex flex-col sm:flex-row gap-4 lg:gap-6"
               >
-                <motion.button
+                <motion.a
                   whileHover={{ 
                     scale: 1.02,
                     boxShadow: "0 20px 40px rgba(255, 165, 0, 0.4)"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-base lg:text-lg shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 btn-hover-lift"
+                  className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-base lg:text-lg shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 btn-hover-lift inline-flex items-center justify-center" href="https://www.flipkart.com" target="_blank" rel="noopener noreferrer"
                 >
                   Shop Now
-                </motion.button>
+                </motion.a>
                 
-                <motion.button
+                <motion.a
                   whileHover={{ 
                     scale: 1.02,
                     backgroundColor: "rgba(255, 255, 255, 0.1)"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  className="border-2 border-white text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-base lg:text-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
+                  className="border-2 border-white text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-base lg:text-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300" href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" target="_blank" rel="noopener noreferrer"
                 >
                   Explore Categories
-                </motion.button>
+                </motion.a>
               </motion.div>
 
               {/* Flipkart Stats */}
@@ -308,42 +273,47 @@ export default function FlipkartHero() {
               </motion.div>
             </motion.div>
 
-            {/* 3D Product Scene */}
+            {/* 3D Product Scene - Optimized for Performance */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1.2, delay: 0.5 }}
               className="h-[400px] sm:h-[500px] lg:h-[600px] xl:h-[700px] perspective-500 lg:perspective-1000 order-1 lg:order-2"
               style={{
-                transform: `rotateX(${mousePosition.y * 2}deg) rotateY(${mousePosition.x * 2}deg)`
+                transform: `rotateX(${mousePosition.y * 1}deg) rotateY(${mousePosition.x * 1}deg)`
               }}
             >
-              <Canvas
-                camera={{ position: [0, 0, 8], fov: 50 }}
-                className="rounded-2xl lg:rounded-3xl bg-gradient-to-br from-white/10 to-blue-500/20 backdrop-blur-sm border border-white/20 performance-optimize"
-                shadows
-                gl={{ 
-                  antialias: true,
-                  alpha: true,
-                  powerPreference: "high-performance"
-                }}
-              >
-                <Scene />
-              </Canvas>
+              <Suspense fallback={<LoadingFallback />}>
+                <Canvas
+                  camera={{ position: [0, 0, 8], fov: 50 }}
+                  className="rounded-2xl lg:rounded-3xl bg-gradient-to-br from-white/10 to-blue-500/20 backdrop-blur-sm border border-white/20"
+                  gl={{ 
+                    antialias: false,
+                    alpha: true,
+                    powerPreference: "high-performance",
+                    stencil: false,
+                    depth: true
+                  }}
+                  dpr={[1, 1.5]} // Limit pixel ratio for better performance
+                  performance={{ min: 0.5 }} // Adaptive performance
+                >
+                  <Scene />
+                </Canvas>
+              </Suspense>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Floating Flipkart Elements - Hidden on mobile */}
+      {/* Floating Flipkart Elements - Optimized animations */}
       <motion.div
         animate={{ 
-          y: [0, -20, 0],
-          rotate: [0, 10, 0],
-          scale: [1, 1.1, 1]
+          y: [0, -15, 0],
+          rotate: [0, 8, 0],
+          scale: [1, 1.05, 1]
         }}
         transition={{ 
-          duration: 6,
+          duration: 4,
           repeat: Infinity,
           ease: "easeInOut"
         }}
@@ -354,15 +324,15 @@ export default function FlipkartHero() {
       
       <motion.div
         animate={{ 
-          y: [0, 30, 0],
-          rotate: [0, -15, 0],
-          scale: [1, 0.9, 1]
+          y: [0, 20, 0],
+          rotate: [0, -10, 0],
+          scale: [1, 0.95, 1]
         }}
         transition={{ 
-          duration: 8,
+          duration: 5,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: 2
+          delay: 1
         }}
         className="absolute bottom-40 left-20 w-10 h-10 lg:w-14 lg:h-14 bg-orange-500 rounded-full items-center justify-center opacity-80 hidden sm:flex"
       >

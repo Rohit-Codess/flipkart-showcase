@@ -1,35 +1,29 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useRef, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, MeshDistortMaterial, Box, Sphere, Text, Environment, OrbitControls } from '@react-three/drei'
+import { Float, Box, Sphere, Environment, OrbitControls } from '@react-three/drei'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import * as THREE from 'three'
+import LoadingFallback from './LoadingFallback'
 
-// Real Flipkart Product Categories with 3D Models
-interface ProductProps {
-  position: [number, number, number]
-  price: string
-  discount?: string
-  color: string
-}
-
-function SmartphoneProduct({ position, price, discount, color }: ProductProps) {
+// Optimized Product Components with reduced complexity
+function SmartphoneProduct({ position, color }: { position: [number, number, number], color: string }) {
   const meshRef = useRef<THREE.Group>(null!)
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.05
+      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.15
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 1.5) * 0.03
     }
   })
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={0.3}>
+    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.2}>
       <group ref={meshRef} position={position}>
-        {/* Phone Body */}
-        <Box args={[0.8, 1.6, 0.08]} castShadow>
-          <MeshDistortMaterial color={color} distort={0.02} speed={1.5} metalness={0.9} roughness={0.1} />
+        {/* Phone Body - Simplified */}
+        <Box args={[0.8, 1.6, 0.08]}>
+          <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
         </Box>
         {/* Screen */}
         <Box args={[0.7, 1.4, 0.01]} position={[0, 0, 0.05]}>
@@ -37,48 +31,29 @@ function SmartphoneProduct({ position, price, discount, color }: ProductProps) {
         </Box>
         {/* Brand Logo Area */}
         <Box args={[0.6, 0.2, 0.005]} position={[0, 0.5, 0.051]}>
-          <meshStandardMaterial color="#2874f0" emissive="#1e40af" emissiveIntensity={0.2} />
+          <meshStandardMaterial color="#2874f0" emissive="#1e40af" emissiveIntensity={0.1} />
         </Box>
-        {/* Price Tag */}
-        <Text
-          position={[0, -0.9, 0]}
-          fontSize={0.08}
-          color="#00ff00"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {price}
-        </Text>
-        <Text
-          position={[0, -1.1, 0]}
-          fontSize={0.06}
-          color="#ff6b6b"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {discount}
-        </Text>
       </group>
     </Float>
   )
 }
 
-function LaptopProduct({ position, price, color }: ProductProps) {
+function LaptopProduct({ position, color }: { position: [number, number, number], color: string }) {
   const meshRef = useRef<THREE.Group>(null!)
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.3
-      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1.5) * 0.08
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2
+      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1) * 0.05
     }
   })
 
   return (
-    <Float speed={1.5} rotationIntensity={2} floatIntensity={0.5}>
+    <Float speed={1} rotationIntensity={1} floatIntensity={0.3}>
       <group ref={meshRef} position={position}>
-        {/* Laptop Screen */}
-        <Box args={[2, 1.4, 0.08]} position={[0, 0.3, 0]} castShadow>
-          <MeshDistortMaterial color={color} distort={0.02} speed={1} metalness={0.8} roughness={0.2} />
+        {/* Laptop Screen - Simplified */}
+        <Box args={[2, 1.4, 0.08]} position={[0, 0.3, 0]}>
+          <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
         </Box>
         {/* Display */}
         <Box args={[1.8, 1.2, 0.01]} position={[0, 0.3, 0.045]}>
@@ -88,81 +63,61 @@ function LaptopProduct({ position, price, color }: ProductProps) {
         <Box args={[1.6, 0.2, 0.005]} position={[0, 0.7, 0.05]}>
           <meshStandardMaterial color="#2874f0" />
         </Box>
-        {/* Keyboard */}
+        {/* Keyboard - Simplified */}
         <Box args={[2, 0.08, 1.4]} position={[0, -0.7, -0.7]}>
-          <MeshDistortMaterial color="#666666" distort={0.01} speed={0.5} metalness={0.6} roughness={0.4} />
+          <meshStandardMaterial color="#666666" metalness={0.5} roughness={0.5} />
         </Box>
-        {/* Price Tag */}
-        <Text
-          position={[0, -1.5, 0]}
-          fontSize={0.1}
-          color="#00ff00"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {price}
-        </Text>
       </group>
     </Float>
   )
 }
 
-function HeadphonesProduct({ position, price, color }: ProductProps) {
+function HeadphonesProduct({ position, color }: { position: [number, number, number], color: string }) {
   const meshRef = useRef<THREE.Group>(null!)
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.8) * 0.15
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2.5) * 0.06
+      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.1
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.04
     }
   })
 
   return (
-    <Float speed={2.5} rotationIntensity={0.5} floatIntensity={0.8}>
+    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
       <group ref={meshRef} position={position}>
-        {/* Left Ear Cup */}
-        <Sphere args={[0.5]} position={[-0.6, 0, 0]} castShadow>
-          <MeshDistortMaterial color={color} distort={0.1} speed={2} metalness={0.4} roughness={0.6} />
+        {/* Left Ear Cup - Simplified */}
+        <Sphere args={[0.5]} position={[-0.6, 0, 0]}>
+          <meshStandardMaterial color={color} metalness={0.3} roughness={0.7} />
         </Sphere>
-        {/* Right Ear Cup */}
-        <Sphere args={[0.5]} position={[0.6, 0, 0]} castShadow>
-          <MeshDistortMaterial color={color} distort={0.1} speed={2} metalness={0.4} roughness={0.6} />
+        {/* Right Ear Cup - Simplified */}
+        <Sphere args={[0.5]} position={[0.6, 0, 0]}>
+          <meshStandardMaterial color={color} metalness={0.3} roughness={0.7} />
         </Sphere>
         {/* Headband */}
         <Box args={[1.4, 0.12, 0.12]} position={[0, 0.6, 0]}>
-          <MeshDistortMaterial color="#333333" distort={0.05} speed={1} metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial color="#333333" metalness={0.6} roughness={0.4} />
         </Box>
-        {/* Price Tag */}
-        <Text
-          position={[0, -0.8, 0]}
-          fontSize={0.07}
-          color="#00ff00"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {price}
-        </Text>
       </group>
     </Float>
   )
 }
 
-function WatchProduct({ position, price, color }: ProductProps) {
+function WatchProduct({ position, color }: { position: [number, number, number], color: string }) {
   const meshRef = useRef<THREE.Group>(null!)
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 1.2) * 0.1
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.05
+      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.05
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.04
     }
   })
 
   return (
-    <Float speed={3} rotationIntensity={1} floatIntensity={0.4}>
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.3}>
       <group ref={meshRef} position={position}>
-        {/* Watch Face */}
-        <Box args={[0.6, 0.8, 0.2]} castShadow>
-          <MeshDistortMaterial color={color} distort={0.03} speed={1.5} metalness={0.9} roughness={0.1} />
+        {/* Watch Face - Simplified */}
+        <Box args={[0.6, 0.8, 0.2]}>
+          <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
         </Box>
         {/* Screen */}
         <Box args={[0.5, 0.7, 0.01]} position={[0, 0, 0.11]}>
@@ -170,60 +125,40 @@ function WatchProduct({ position, price, color }: ProductProps) {
         </Box>
         {/* Digital Display */}
         <Box args={[0.4, 0.15, 0.005]} position={[0, 0.15, 0.12]}>
-          <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.3} />
         </Box>
-        {/* Price Tag */}
-        <Text
-          position={[0, -0.6, 0]}
-          fontSize={0.06}
-          color="#00ff00"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {price}
-        </Text>
       </group>
     </Float>
   )
 }
 
+// Optimized Scene with reduced lighting for better performance
 function ProductScene() {
   return (
     <>
-      <Environment preset="studio" />
+      <Environment preset="city" />
       <ambientLight intensity={0.4} />
-      <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
-      <pointLight position={[-10, -10, -5]} intensity={0.5} color="#2874f0" />
+      <directionalLight position={[8, 8, 5]} intensity={0.8} />
+      <pointLight position={[-8, -8, -5]} intensity={0.3} color="#2874f0" />
       
       <SmartphoneProduct 
         position={[-3, 2, 0]} 
-        price="₹15,999" 
-        discount="60% off" 
         color="#1e3a8a" 
       />
       <LaptopProduct 
         position={[3, 1, -2]} 
-        price="₹45,999" 
         color="#374151" 
       />
       <HeadphonesProduct 
         position={[0, -1, 2]} 
-        price="₹2,499" 
         color="#dc2626" 
       />
       <WatchProduct 
         position={[-2, -2, 1]} 
-        price="₹8,999" 
         color="#059669" 
       />
       
-      <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={0.3} />
-      
-      {/* Ground plane */}
-      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]}>
-        <planeGeometry args={[20, 20]} />
-        <shadowMaterial opacity={0.2} />
-      </mesh>
+      <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={0.2} />
     </>
   )
 }
@@ -306,7 +241,7 @@ export default function FlipkartProducts() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           
-          {/* 3D Product Scene */}
+          {/* 3D Product Scene - Optimized for Performance */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -314,18 +249,21 @@ export default function FlipkartProducts() {
             viewport={{ once: true }}
             className="h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-white/80 backdrop-blur-sm border border-gray-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
           >
-            <Canvas
-              camera={{ position: [0, 0, 10], fov: 50 }}
-              shadows
-              gl={{ 
-                antialias: false,
-                alpha: true,
-                powerPreference: "high-performance"
-              }}
-              className="performance-optimize"
-            >
-              <ProductScene />
-            </Canvas>
+            <Suspense fallback={<LoadingFallback />}>
+              <Canvas
+                camera={{ position: [0, 0, 10], fov: 50 }}
+                gl={{ 
+                  antialias: false,
+                  alpha: true,
+                  powerPreference: "high-performance",
+                  stencil: false
+                }}
+                dpr={[1, 1.5]} // Limit pixel ratio for better performance
+                performance={{ min: 0.5 }} // Adaptive performance
+              >
+                <ProductScene />
+              </Canvas>
+            </Suspense>
           </motion.div>
 
           {/* Product Categories */}
@@ -389,16 +327,16 @@ export default function FlipkartProducts() {
               viewport={{ once: true }}
               className="pt-4 sm:pt-6"
             >
-              <motion.button
+              <motion.a
                 whileHover={{ 
                   scale: 1.02,
                   boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
                 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl lg:rounded-2xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-blue-500/50 transition-all duration-300 btn-hover-lift"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl lg:rounded-2xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-blue-500/50 transition-all duration-300 btn-hover-lift" href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" target="_blank" rel="noopener noreferrer"
               >
                 Explore All Categories
-              </motion.button>
+              </motion.a>
             </motion.div>
           </motion.div>
         </div>
@@ -414,7 +352,7 @@ export default function FlipkartProducts() {
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8 sm:mb-12">
             Featured Brands on <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Flipkart</span>
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8">
+          <a className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8 cursor-pointer" href="https://www.flipkart.com/mobile-phones-store" target="_blank" rel="noopener noreferrer">
             {["Apple", "Samsung", "OnePlus", "Xiaomi", "Realme", "Vivo"].map((brand, index) => (
               <motion.div
                 key={brand}
@@ -432,7 +370,7 @@ export default function FlipkartProducts() {
                 <div className="text-xs sm:text-sm text-green-600 font-medium">Up to 70% off</div>
               </motion.div>
             ))}
-          </div>
+          </a>
         </motion.div>
       </div>
     </motion.div>

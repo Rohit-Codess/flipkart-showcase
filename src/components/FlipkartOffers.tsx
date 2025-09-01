@@ -1,76 +1,57 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useRef, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, MeshDistortMaterial, Box, Sphere, Text, Environment } from '@react-three/drei'
+import { Float, Box, Sphere, Environment } from '@react-three/drei'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import * as THREE from 'three'
+import LoadingFallback from './LoadingFallback'
 
-// 3D Sale Tags and Offer Boxes
-function SaleTag3D({ position, color, discount }: { position: [number, number, number], color: string, discount: string }) {
+// Optimized 3D Sale Tags and Offer Boxes
+function SaleTag3D({ position, color }: { position: [number, number, number], color: string }) {
   const meshRef = useRef<THREE.Group>(null!)
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2) * 0.3
-      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 1.5) * 0.1
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.2
+      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.2
+      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 1) * 0.05
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.1
     }
   })
 
   return (
-    <Float speed={3} rotationIntensity={2} floatIntensity={1}>
+    <Float speed={2} rotationIntensity={1} floatIntensity={0.5}>
       <group ref={meshRef} position={position}>
-        {/* Sale Tag Shape */}
-        <Box args={[1.5, 0.8, 0.1]} castShadow>
-          <MeshDistortMaterial color={color} distort={0.2} speed={4} metalness={0.3} roughness={0.7} />
+        {/* Sale Tag Shape - Simplified */}
+        <Box args={[1.5, 0.8, 0.1]}>
+          <meshStandardMaterial color={color} metalness={0.2} roughness={0.8} />
         </Box>
-        {/* Discount Text */}
-        <Text
-          position={[0, 0, 0.06]}
-          fontSize={0.2}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {discount}
-        </Text>
       </group>
     </Float>
   )
 }
 
-function OfferBox3D({ position, color, offer }: { position: [number, number, number], color: string, offer: string }) {
+function OfferBox3D({ position, color }: { position: [number, number, number], color: string }) {
   const meshRef = useRef<THREE.Group>(null!)
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 1.2) * 0.2
-      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 2) * 0.15
+      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.1
+      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1.5) * 0.08
     }
   })
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={0.8}>
+    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
       <group ref={meshRef} position={position}>
-        {/* Offer Box */}
-        <Box args={[2, 1.2, 0.3]} castShadow>
-          <MeshDistortMaterial color={color} distort={0.1} speed={2} metalness={0.6} roughness={0.4} />
+        {/* Offer Box - Simplified */}
+        <Box args={[2, 1.2, 0.3]}>
+          <meshStandardMaterial color={color} metalness={0.5} roughness={0.5} />
         </Box>
         {/* Flipkart Logo */}
         <Box args={[1.5, 0.2, 0.05]} position={[0, 0.4, 0.16]}>
           <meshStandardMaterial color="#2874f0" />
         </Box>
-        {/* Offer Text */}
-        <Text
-          position={[0, 0, 0.16]}
-          fontSize={0.15}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {offer}
-        </Text>
       </group>
     </Float>
   )
@@ -81,58 +62,42 @@ function CoinEffect({ position }: { position: [number, number, number] }) {
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 2
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 4) * 0.1
+      meshRef.current.rotation.y = state.clock.elapsedTime * 1.5
+      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.06
     }
   })
 
   return (
-    <Float speed={4} rotationIntensity={3} floatIntensity={0.5}>
+    <Float speed={3} rotationIntensity={2} floatIntensity={0.3}>
       <group ref={meshRef} position={position}>
-        {/* Coin */}
-        <Sphere args={[0.3, 32, 16]} castShadow>
-          <MeshDistortMaterial color="#ffd700" distort={0.1} speed={3} metalness={0.9} roughness={0.1} />
+        {/* Coin - Simplified */}
+        <Sphere args={[0.3, 16, 8]}>
+          <meshStandardMaterial color="#ffd700" metalness={0.8} roughness={0.2} />
         </Sphere>
-        {/* Rupee Symbol */}
-        <Text
-          position={[0, 0, 0.31]}
-          fontSize={0.2}
-          color="#2874f0"
-          anchorX="center"
-          anchorY="middle"
-        >
-          ₹
-        </Text>
       </group>
     </Float>
   )
 }
 
+// Optimized Scene with reduced lighting for better performance
 function OffersScene() {
   return (
     <>
-      <Environment preset="studio" />
+      <Environment preset="city" />
       <ambientLight intensity={0.4} />
-      <directionalLight position={[10, 10, 5]} intensity={1.5} castShadow />
-      <pointLight position={[-10, -10, -5]} intensity={0.8} color="#ff6b00" />
-      <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} intensity={3} castShadow />
+      <directionalLight position={[8, 8, 5]} intensity={1} />
+      <pointLight position={[-8, -8, -5]} intensity={0.5} color="#ff6b00" />
       
-      <SaleTag3D position={[-3, 2, 0]} color="#ff4444" discount="80% OFF" />
-      <SaleTag3D position={[3, 1, -1]} color="#ff6b00" discount="70% OFF" />
-      <SaleTag3D position={[0, -1, 2]} color="#ff0066" discount="60% OFF" />
+      <SaleTag3D position={[-3, 2, 0]} color="#ff4444" />
+      <SaleTag3D position={[3, 1, -1]} color="#ff6b00" />
+      <SaleTag3D position={[0, -1, 2]} color="#ff0066" />
       
-      <OfferBox3D position={[-2, -2, 1]} color="#2874f0" offer="BIG BILLION DAYS" />
-      <OfferBox3D position={[2, 2, -2]} color="#ff6b00" offer="SUPER SAVER DEALS" />
+      <OfferBox3D position={[-2, -2, 1]} color="#2874f0" />
+      <OfferBox3D position={[2, 2, -2]} color="#ff6b00" />
       
       <CoinEffect position={[-1, 3, 1]} />
       <CoinEffect position={[1, -3, -1]} />
       <CoinEffect position={[3, 0, 1]} />
-      
-      {/* Ground plane for shadows */}
-      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]}>
-        <planeGeometry args={[30, 30]} />
-        <shadowMaterial opacity={0.3} />
-      </mesh>
     </>
   )
 }
@@ -227,6 +192,7 @@ export default function FlipkartOffers() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-12 sm:mb-16 lg:mb-20">
           
           {/* 3D Offers Scene - Mobile Optimized */}
+          {/* 3D Offers Scene - Optimized for Performance */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -234,18 +200,21 @@ export default function FlipkartOffers() {
             viewport={{ once: true }}
             className="h-[350px] sm:h-[450px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-white/80 backdrop-blur-sm border border-orange-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
           >
-            <Canvas
-              camera={{ position: [0, 0, 10], fov: 50 }}
-              shadows
-              gl={{ 
-                antialias: false,
-                alpha: true,
-                powerPreference: "high-performance"
-              }}
-              className="performance-optimize"
-            >
-              <OffersScene />
-            </Canvas>
+            <Suspense fallback={<LoadingFallback />}>
+              <Canvas
+                camera={{ position: [0, 0, 10], fov: 50 }}
+                gl={{ 
+                  antialias: false,
+                  alpha: true,
+                  powerPreference: "high-performance",
+                  stencil: false
+                }}
+                dpr={[1, 1.5]} // Limit pixel ratio for better performance
+                performance={{ min: 0.5 }} // Adaptive performance
+              >
+                <OffersScene />
+              </Canvas>
+            </Suspense>
           </motion.div>
 
           {/* Offer Categories */}
@@ -309,16 +278,19 @@ export default function FlipkartOffers() {
               viewport={{ once: true }}
               className="pt-4 sm:pt-6"
             >
-              <motion.button
+              <motion.a
                 whileHover={{ 
                   scale: 1.02,
                   boxShadow: "0 20px 40px rgba(239, 68, 68, 0.4)"
                 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-gradient-to-r from-red-500 to-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl lg:rounded-2xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-red-500/50 transition-all duration-300 btn-hover-lift"
+                href="https://www.flipkart.com/offers-store"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Explore All Offers
-              </motion.button>
+              </motion.a>
             </motion.div>
           </motion.div>
         </div>
@@ -366,27 +338,27 @@ export default function FlipkartOffers() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-            <motion.button
+            <motion.a
               whileHover={{ 
                 scale: 1.02,
                 boxShadow: "0 30px 60px rgba(255, 255, 255, 0.3)"
               }}
               whileTap={{ scale: 0.98 }}
-              className="bg-white text-blue-600 px-6 sm:px-8 lg:px-12 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-xl hover:bg-gray-100 transition-all duration-300 btn-hover-lift"
+              className="bg-white text-blue-600 px-6 sm:px-8 lg:px-12 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-xl hover:bg-gray-100 transition-all duration-300 btn-hover-lift" href="https://www.flipkart.com/plus" target="_blank" rel="noopener noreferrer"
             >
               Join Flipkart Plus
-            </motion.button>
+            </motion.a>
             
-            <motion.button
+            <motion.a
               whileHover={{ 
                 scale: 1.02,
                 backgroundColor: "rgba(255, 255, 255, 0.1)"
               }}
               whileTap={{ scale: 0.98 }}
-              className="border-2 border-white text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
+              className="border-2 border-white text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300" href="https://www.flipkart.com/pages/plus-tnc" target="_blank" rel="noopener noreferrer"
             >
               Learn More
-            </motion.button>
+            </motion.a>
           </div>
         </motion.div>
       </div>
