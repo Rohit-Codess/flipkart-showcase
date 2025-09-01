@@ -195,16 +195,6 @@ export default function FlipkartShopping() {
             Why Shop with Flipkart?
           </motion.h2>
           
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto"
-          >
-            Experience the joy of shopping with India&apos;s most trusted e-commerce platform. 
-            From lightning-fast delivery to secure payments, we&apos;ve got you covered.
-          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">

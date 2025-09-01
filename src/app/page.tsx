@@ -25,6 +25,11 @@ const FlipkartShopping = dynamic(() => import('@/components/FlipkartShopping'), 
   loading: () => <div className="h-16 bg-gradient-to-r from-green-50 to-blue-50 animate-pulse" />
 })
 
+const FlipkartEcosystem = dynamic(() => import('@/components/FlipkartEcosystem'), {
+  ssr: false,
+  loading: () => <div className="h-16 bg-gradient-to-r from-purple-50 to-indigo-50 animate-pulse" />
+})
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -42,6 +47,10 @@ export default function Home() {
       
       <Suspense fallback={<div className="h-16 bg-gradient-to-r from-green-50 to-blue-50 animate-pulse" />}>
         <FlipkartShopping />
+      </Suspense>
+      
+      <Suspense fallback={<div className="h-16 bg-gradient-to-r from-purple-50 to-indigo-50 animate-pulse" />}>
+        <FlipkartEcosystem />
       </Suspense>
     </div>
   );

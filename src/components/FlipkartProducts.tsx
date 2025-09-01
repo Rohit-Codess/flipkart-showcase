@@ -204,6 +204,17 @@ export default function FlipkartProducts() {
     }
   ]
 
+  const featuredBrands = [
+    { name: "Apple", discount: "Up to 70% off", letter: "A", color: "from-gray-600 to-gray-800" },
+    { name: "Samsung", discount: "Up to 70% off", letter: "S", color: "from-blue-500 to-blue-700" },
+    { name: "OnePlus", discount: "Up to 70% off", letter: "O", color: "from-red-500 to-red-700" },
+    { name: "Xiaomi", discount: "Up to 70% off", letter: "X", color: "from-orange-500 to-orange-700" },
+    { name: "Vivo", discount: "Up to 60% off", letter: "V", color: "from-purple-500 to-purple-700" },
+    { name: "Oppo", discount: "Up to 65% off", letter: "O", color: "from-green-500 to-green-700" },
+    { name: "Realme", discount: "Up to 55% off", letter: "R", color: "from-yellow-500 to-yellow-700" },
+    { name: "Motorola", discount: "Up to 50% off", letter: "M", color: "from-indigo-500 to-indigo-700" },
+  ]
+
   return (
     <motion.div 
       ref={containerRef}
@@ -237,6 +248,70 @@ export default function FlipkartProducts() {
           >
             🎉 Big Billion Days LIVE - Up to 80% Off + Extra 10% Bank Discount
           </motion.div>
+        </motion.div>
+
+        {/* Featured Brands Section - Mobile Optimized */}
+        <motion.div 
+          className="mb-12 sm:mb-16 lg:mb-20"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <motion.h3 
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center text-gray-800"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            Featured Brands on <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Flipkart</span>
+          </motion.h3>
+          
+          {/* Horizontal Scrolling Brands */}
+          <div className="relative">
+            <div className="flex overflow-x-auto scrollbar-hide gap-3 sm:gap-4 pb-4 snap-x snap-mandatory px-1">
+              {featuredBrands.map((brand, index) => (
+                <motion.div
+                  key={brand.name}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  className="group flex-shrink-0 w-36 sm:w-44 lg:w-48 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-blue-200 snap-center"
+                >
+                  <div className="text-center">
+                    {/* Brand Circle */}
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 mx-auto mb-2 sm:mb-3 lg:mb-4 rounded-full bg-gradient-to-r ${brand.color} flex items-center justify-center text-white font-bold text-sm sm:text-base lg:text-xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      {brand.letter}
+                    </div>
+                    
+                    {/* Brand Name */}
+                    <h4 className="text-sm sm:text-base lg:text-lg font-bold text-gray-800 mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors duration-300 truncate">
+                      {brand.name}
+                    </h4>
+                    
+                    {/* Discount */}
+                    <p className="text-xs sm:text-sm lg:text-base text-green-600 font-semibold">
+                      {brand.discount}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Scroll Indicator */}
+            <div className="flex justify-center mt-3 sm:mt-4">
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="text-xs sm:text-sm text-gray-500 flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full"
+              >
+                <span>👈</span> Scroll to see more brands <span>👉</span>
+              </motion.p>
+            </div>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -340,38 +415,6 @@ export default function FlipkartProducts() {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Featured Brands */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-16 sm:mt-24 lg:mt-32"
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8 sm:mb-12">
-            Featured Brands on <span className="bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">Flipkart</span>
-          </h3>
-          <a className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8 cursor-pointer" href="https://www.flipkart.com/mobile-phones-store" target="_blank" rel="noopener noreferrer">
-            {["Apple", "Samsung", "OnePlus", "Xiaomi", "Realme", "Vivo"].map((brand, index) => (
-              <motion.div
-                key={brand}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="bg-white rounded-xl lg:rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center border border-gray-100"
-              >
-                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg sm:text-xl">
-                  {brand.charAt(0)}
-                </div>
-                <div className="text-base sm:text-lg lg:text-xl font-bold text-gray-800 mb-1">{brand}</div>
-                <div className="text-xs sm:text-sm text-green-600 font-medium">Up to 70% off</div>
-              </motion.div>
-            ))}
-          </a>
-        </motion.div>
       </div>
     </motion.div>
   )

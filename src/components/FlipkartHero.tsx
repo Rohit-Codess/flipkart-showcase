@@ -5,6 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, Sphere, Box, Environment } from '@react-three/drei'
 import { motion } from 'framer-motion'
 import * as THREE from 'three'
+import Image from 'next/image'
 import LoadingFallback from './LoadingFallback'
 
 // Optimized Flipkart Product 3D Models with reduced complexity
@@ -188,10 +189,14 @@ export default function FlipkartHero() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="flex items-center space-x-3 sm:space-x-4 mb-6 lg:mb-8"
               >
-                <div className="bg-blue-500 p-2 sm:p-3 lg:p-4 rounded-xl lg:rounded-2xl">
-                  <svg width="32" height="32" className="sm:w-10 sm:h-10 lg:w-12 lg:h-12" viewBox="0 0 24 24" fill="white">
-                    <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/>
-                  </svg>
+                <div className="bg-white p-2 sm:p-3 lg:p-4 rounded-xl lg:rounded-2xl">
+                  <Image 
+                    src="/logo.png" 
+                    alt="Flipkart Logo" 
+                    width={48} 
+                    height={48} 
+                    className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain"
+                  />
                 </div>
                 <div>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Flipkart</h1>
