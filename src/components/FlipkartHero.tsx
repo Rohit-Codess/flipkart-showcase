@@ -1,169 +1,92 @@
 'use client'
 
-import React, { useRef, useState, Suspense } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, Sphere, Box, Environment } from '@react-three/drei'
+import React from 'react'
 import { motion } from 'framer-motion'
-import * as THREE from 'three'
 import Image from 'next/image'
-import LoadingFallback from './LoadingFallback'
+import { CardContainer, CardBody, CardItem } from '@/components/ui/3d-card'
 
-// Optimized Flipkart Product 3D Models with reduced complexity
-function FlipkartPhone({ position }: { position: [number, number, number] }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.2
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 1.5) * 0.05
-    }
-  })
-
+// Flipkart Product Cards for 3D effect
+function FlipkartProductCards() {
   return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.3}>
-      <group ref={meshRef} position={position} scale={0.7}>
-        {/* Phone Body - Simplified */}
-        <Box args={[1, 2, 0.1]}>
-          <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.2} />
-        </Box>
-        {/* Screen */}
-        <Box args={[0.85, 1.7, 0.02]} position={[0, 0, 0.06]}>
-          <meshStandardMaterial color="#2874f0" emissive="#1e5dc8" emissiveIntensity={0.2} />
-        </Box>
-        {/* Home Button */}
-        <Sphere args={[0.05]} position={[0, -0.7, 0.06]}>
-          <meshStandardMaterial color="#ffffff" />
-        </Sphere>
-      </group>
-    </Float>
-  )
-}
+    <CardContainer className="inter-var w-full h-full">
+      <CardBody className="bg-gradient-to-br from-white/10 to-blue-500/20 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-full rounded-xl p-4 sm:p-6 border backdrop-blur-sm overflow-hidden">
+        
+        {/* Flipkart Logo */}
+        <CardItem
+          translateZ="50"
+          className="text-lg sm:text-xl font-bold text-black dark:text-white mb-3 sm:mb-4"
+        >
+          <div className="flex items-center space-x-2">
+            <Image 
+              src="/logo.png" 
+              alt="Flipkart Logo" 
+              width={24} 
+              height={24} 
+              className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
+            />
+            <span className="text-base sm:text-lg">Flipkart</span>
+          </div>
+        </CardItem>
 
-function FlipkartLaptop({ position }: { position: [number, number, number] }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2
-      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1) * 0.08
-    }
-  })
+        {/* 3D Product Grid */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 flex-1 mb-3 sm:mb-4">
+          {/* Phone */}
+          <CardItem translateZ="100" rotateX={5} rotateY={-5} className="w-full">
+            <div className="bg-black/80 rounded-lg p-3 sm:p-4 flex flex-col items-center justify-center h-24 sm:h-32">
+              <div className="text-2xl sm:text-4xl mb-1 sm:mb-2">📱</div>
+              <div className="text-white text-xs sm:text-sm font-medium">Smartphones</div>
+              <div className="text-blue-400 text-xs">Starting ₹8,999</div>
+            </div>
+          </CardItem>
 
-  return (
-    <Float speed={1} rotationIntensity={1} floatIntensity={0.5}>
-      <group ref={meshRef} position={position} scale={0.7}>
-        {/* Laptop Screen - Simplified */}
-        <Box args={[2.5, 1.8, 0.1]} position={[0, 0.5, 0]}>
-          <meshStandardMaterial color="#2d3748" metalness={0.7} roughness={0.3} />
-        </Box>
-        {/* Display */}
-        <Box args={[2.3, 1.6, 0.02]} position={[0, 0.5, 0.06]}>
-          <meshStandardMaterial color="#000000" />
-        </Box>
-        {/* Flipkart Site Preview */}
-        <Box args={[2.1, 0.3, 0.01]} position={[0, 1, 0.07]}>
-          <meshStandardMaterial color="#2874f0" />
-        </Box>
-        {/* Keyboard Base - Simplified */}
-        <Box args={[2.5, 0.1, 1.8]} position={[0, -0.9, -0.9]}>
-          <meshStandardMaterial color="#4a5568" metalness={0.5} roughness={0.5} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
+          {/* Laptop */}
+          <CardItem translateZ="80" rotateX={-5} rotateY={5} className="w-full">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg p-3 sm:p-4 flex flex-col items-center justify-center h-24 sm:h-32">
+              <div className="text-2xl sm:text-4xl mb-1 sm:mb-2">💻</div>
+              <div className="text-white text-xs sm:text-sm font-medium">Laptops</div>
+              <div className="text-yellow-400 text-xs">Starting ₹25,999</div>
+            </div>
+          </CardItem>
 
-function FlipkartHeadphones({ position }: { position: [number, number, number] }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.1
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.05
-    }
-  })
+          {/* Headphones */}
+          <CardItem translateZ="60" rotateX={5} rotateY={5} className="w-full">
+            <div className="bg-gradient-to-br from-red-500 to-orange-600 rounded-lg p-3 sm:p-4 flex flex-col items-center justify-center h-24 sm:h-32">
+              <div className="text-2xl sm:text-4xl mb-1 sm:mb-2">🎧</div>
+              <div className="text-white text-xs sm:text-sm font-medium">Audio</div>
+              <div className="text-yellow-300 text-xs">Starting ₹599</div>
+            </div>
+          </CardItem>
 
-  return (
-    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.6}>
-      <group ref={meshRef} position={position} scale={0.7}>
-        {/* Left Ear Cup - Simplified */}
-        <Sphere args={[0.6]} position={[-0.8, 0, 0]}>
-          <meshStandardMaterial color="#ff6b6b" metalness={0.2} roughness={0.8} />
-        </Sphere>
-        {/* Right Ear Cup - Simplified */}
-        <Sphere args={[0.6]} position={[0.8, 0, 0]}>
-          <meshStandardMaterial color="#ff6b6b" metalness={0.2} roughness={0.8} />
-        </Sphere>
-        {/* Headband */}
-        <Box args={[1.8, 0.15, 0.15]} position={[0, 0.7, 0]}>
-          <meshStandardMaterial color="#333333" metalness={0.6} roughness={0.4} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
+          {/* Watch */}
+          <CardItem translateZ="120" rotateX={-5} rotateY={-5} className="w-full">
+            <div className="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg p-3 sm:p-4 flex flex-col items-center justify-center h-24 sm:h-32">
+              <div className="text-2xl sm:text-4xl mb-1 sm:mb-2">⌚</div>
+              <div className="text-black text-xs sm:text-sm font-medium">Smartwatch</div>
+              <div className="text-black text-xs">Starting ₹1,499</div>
+            </div>
+          </CardItem>
+        </div>
 
-function FlipkartWatch({ position }: { position: [number, number, number] }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.05
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 1.8) * 0.06
-    }
-  })
+        {/* Call to Action */}
+        <CardItem
+          translateZ="80"
+          rotateX={10}
+          className="w-full"
+        >
+          <a className="block w-full bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 sm:py-3 rounded-lg font-semibold text-center cursor-pointer transition-all duration-300 text-xs sm:text-sm" href="https://www.flipkart.com" target="_blank" rel="noopener noreferrer">
+            Explore Flipkart Products
+          </a>
+        </CardItem>
 
-  return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.4}>
-      <group ref={meshRef} position={position} scale={0.7}>
-        {/* Watch Face - Simplified */}
-        <Box args={[0.8, 1, 0.3]}>
-          <meshStandardMaterial color="#ffd700" metalness={0.8} roughness={0.2} />
-        </Box>
-        {/* Screen */}
-        <Box args={[0.6, 0.8, 0.02]} position={[0, 0, 0.16]}>
-          <meshStandardMaterial color="#000000" />
-        </Box>
-        {/* Digital Display */}
-        <Box args={[0.5, 0.2, 0.01]} position={[0, 0.2, 0.17]}>
-          <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.3} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
-
-// Optimized Scene with reduced lighting for better performance
-function Scene() {
-  return (
-    <>
-      <Environment preset="city" />
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} />
-      <pointLight position={[-3, -3, -3]} intensity={0.3} color="#2874f0" />
-      
-      <FlipkartPhone position={[-4, 1, 0]} />
-      <FlipkartLaptop position={[4, 0, -1]} />
-      <FlipkartHeadphones position={[0, -2, 2]} />
-      <FlipkartWatch position={[-2, -1, 1]} />
-    </>
-  )
+      </CardBody>
+    </CardContainer>
+  );
 }
 
 export default function FlipkartHero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setMousePosition({
-      x: (e.clientX / window.innerWidth) * 2 - 1,
-      y: -(e.clientY / window.innerHeight) * 2 + 1
-    })
-  }
-
   return (
     <div 
       className="relative min-h-screen bg-white overflow-hidden"
-      onMouseMove={handleMouseMove}
     >
       {/* Flipkart Brand Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -171,9 +94,9 @@ export default function FlipkartHero() {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 min-h-screen flex items-center sm:py-2 md:py-6">
+      <div className="relative z-10 min-h-screen flex items-center py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
             {/* Hero Text */}
             <motion.div
@@ -278,34 +201,16 @@ export default function FlipkartHero() {
               </motion.div>
             </motion.div>
 
-            {/* 3D Product Scene - Optimized for Performance */}
+            {/* 3D Product Cards - Interactive Experience */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1.2, delay: 0.5 }}
-              className="w-full aspect-square max-h-[70vh] perspective-500 lg:perspective-1000 order-1 lg:order-2"
-              style={{
-                transform: `rotateX(${mousePosition.y * 1}deg) rotateY(${mousePosition.x * 1}deg)`
-              }}
+              className="w-full h-[400px] sm:h-[500px] lg:h-[600px] order-1 lg:order-2 flex items-center justify-center"
             >
-              <Suspense fallback={<LoadingFallback />}>
-                <Canvas
-                  camera={{ position: [0, 0, 8], fov: 50 }}
-                  className="rounded-2xl lg:rounded-3xl bg-gradient-to-br from-white/10 to-blue-500/20 backdrop-blur-sm border border-white/20 w-full h-full"
-                  style={{ width: '100%', height: '100%' }}
-                  gl={{ 
-                    antialias: false,
-                    alpha: true,
-                    powerPreference: "high-performance",
-                    stencil: false,
-                    depth: true
-                  }}
-                  dpr={[1, 1.5]} // Limit pixel ratio for better performance
-                  performance={{ min: 0.5 }} // Adaptive performance
-                >
-                  <Scene />
-                </Canvas>
-              </Suspense>
+              <div className="w-full max-w-lg h-full">
+                <FlipkartProductCards />
+              </div>
             </motion.div>
           </div>
         </div>

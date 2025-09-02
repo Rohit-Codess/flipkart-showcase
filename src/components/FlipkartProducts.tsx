@@ -1,167 +1,8 @@
 'use client'
 
-import React, { useRef, Suspense } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, Box, Sphere, Environment, OrbitControls } from '@react-three/drei'
+import React, { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import * as THREE from 'three'
-import LoadingFallback from './LoadingFallback'
-
-// Optimized Product Components with reduced complexity
-function SmartphoneProduct({ position, color }: { position: [number, number, number], color: string }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.15
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 1.5) * 0.03
-    }
-  })
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.2}>
-      <group ref={meshRef} position={position}>
-        {/* Phone Body - Simplified */}
-        <Box args={[0.8, 1.6, 0.08]}>
-          <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
-        </Box>
-        {/* Screen */}
-        <Box args={[0.7, 1.4, 0.01]} position={[0, 0, 0.05]}>
-          <meshStandardMaterial color="#000000" />
-        </Box>
-        {/* Brand Logo Area */}
-        <Box args={[0.6, 0.2, 0.005]} position={[0, 0.5, 0.051]}>
-          <meshStandardMaterial color="#2874f0" emissive="#1e40af" emissiveIntensity={0.1} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
-
-function LaptopProduct({ position, color }: { position: [number, number, number], color: string }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2
-      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1) * 0.05
-    }
-  })
-
-  return (
-    <Float speed={1} rotationIntensity={1} floatIntensity={0.3}>
-      <group ref={meshRef} position={position}>
-        {/* Laptop Screen - Simplified */}
-        <Box args={[2, 1.4, 0.08]} position={[0, 0.3, 0]}>
-          <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
-        </Box>
-        {/* Display */}
-        <Box args={[1.8, 1.2, 0.01]} position={[0, 0.3, 0.045]}>
-          <meshStandardMaterial color="#1a1a1a" />
-        </Box>
-        {/* Flipkart Logo on Screen */}
-        <Box args={[1.6, 0.2, 0.005]} position={[0, 0.7, 0.05]}>
-          <meshStandardMaterial color="#2874f0" />
-        </Box>
-        {/* Keyboard - Simplified */}
-        <Box args={[2, 0.08, 1.4]} position={[0, -0.7, -0.7]}>
-          <meshStandardMaterial color="#666666" metalness={0.5} roughness={0.5} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
-
-function HeadphonesProduct({ position, color }: { position: [number, number, number], color: string }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.1
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.04
-    }
-  })
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
-      <group ref={meshRef} position={position}>
-        {/* Left Ear Cup - Simplified */}
-        <Sphere args={[0.5]} position={[-0.6, 0, 0]}>
-          <meshStandardMaterial color={color} metalness={0.3} roughness={0.7} />
-        </Sphere>
-        {/* Right Ear Cup - Simplified */}
-        <Sphere args={[0.5]} position={[0.6, 0, 0]}>
-          <meshStandardMaterial color={color} metalness={0.3} roughness={0.7} />
-        </Sphere>
-        {/* Headband */}
-        <Box args={[1.4, 0.12, 0.12]} position={[0, 0.6, 0]}>
-          <meshStandardMaterial color="#333333" metalness={0.6} roughness={0.4} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
-
-function WatchProduct({ position, color }: { position: [number, number, number], color: string }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.05
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.04
-    }
-  })
-
-  return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.3}>
-      <group ref={meshRef} position={position}>
-        {/* Watch Face - Simplified */}
-        <Box args={[0.6, 0.8, 0.2]}>
-          <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
-        </Box>
-        {/* Screen */}
-        <Box args={[0.5, 0.7, 0.01]} position={[0, 0, 0.11]}>
-          <meshStandardMaterial color="#000000" />
-        </Box>
-        {/* Digital Display */}
-        <Box args={[0.4, 0.15, 0.005]} position={[0, 0.15, 0.12]}>
-          <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={0.3} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
-
-// Optimized Scene with reduced lighting for better performance
-function ProductScene() {
-  return (
-    <>
-      <Environment preset="city" />
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[8, 8, 5]} intensity={0.8} />
-      <pointLight position={[-8, -8, -5]} intensity={0.3} color="#2874f0" />
-      
-      <SmartphoneProduct 
-        position={[-3, 2, 0]} 
-        color="#1e3a8a" 
-      />
-      <LaptopProduct 
-        position={[3, 1, -2]} 
-        color="#374151" 
-      />
-      <HeadphonesProduct 
-        position={[0, -1, 2]} 
-        color="#dc2626" 
-      />
-      <WatchProduct 
-        position={[-2, -2, 1]} 
-        color="#059669" 
-      />
-      
-      <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={0.2} />
-    </>
-  )
-}
+import { Products } from '@/components/elements/Products'
 
 export default function FlipkartProducts() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -314,93 +155,88 @@ export default function FlipkartProducts() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        {/* Main Content - Two Column Layout like FlipkartHero */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-12 sm:mb-16 lg:mb-20">
           
-          {/* 3D Product Scene - Optimized for Performance */}
+          {/* Left Side - Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-blue-50 border border-blue-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
+            className="text-black space-y-6 lg:space-y-8 order-2 lg:order-1"
           >
-            <Suspense fallback={<LoadingFallback />}>
-              <Canvas
-                camera={{ position: [0, 0, 10], fov: 50 }}
-                gl={{ 
-                  antialias: false,
-                  alpha: true,
-                  powerPreference: "high-performance",
-                  stencil: false
-                }}
-                dpr={[1, 1.5]} // Limit pixel ratio for better performance
-                performance={{ min: 0.5 }} // Adaptive performance
-              >
-                <ProductScene />
-              </Canvas>
-            </Suspense>
-          </motion.div>
-
-          {/* Product Categories */}
-          <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="space-y-4 sm:space-y-6 order-1 lg:order-2"
-          >
-            {categories.map((category, index) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ 
-                  scale: 1.02,
-                  x: 5,
-                  transition: { duration: 0.3 }
-                }}
-                className="group p-4 sm:p-6 rounded-xl lg:rounded-2xl bg-white border border-gray-200 hover:border-blue-500 hover:shadow-xl transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    {category.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors duration-300 mb-1 sm:mb-2 truncate">
-                      {category.name}
-                    </h3>
-                    <p className="text-sm sm:text-base text-black/70 group-hover:text-black transition-colors duration-300 mb-2 line-clamp-2">
-                      {category.description}
-                    </p>
-                    <div className="space-y-1">
-                      <div className="text-xs sm:text-sm text-yellow-600 font-semibold">
-                        {category.offers}
-                      </div>
-                      <div className="text-xs sm:text-sm text-black/60">
-                        {category.products}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{ duration: 1.5, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mt-3 sm:mt-4 group-hover:from-orange-500 group-hover:to-red-500 transition-all duration-300"
-                />
-              </motion.div>
-            ))}
-
+            {/* Section Title */}
             <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-black mb-4">
+                Shop by Category
+              </h2>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                Millions of Products
+              </h3>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p 
+              className="text-base sm:text-lg lg:text-xl text-black/70 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
-              className="pt-4 sm:pt-6"
+            >
+              Discover millions of products across categories with unbeatable prices. 
+              From smartphones to fashion, everything you need is just a click away.
+            </motion.p>
+
+            {/* Featured Categories Grid */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-4"
+            >
+              {categories.map((category, index) => (
+                <motion.div
+                  key={category.name}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    y: -5,
+                    transition: { duration: 0.3 }
+                  }}
+                  className="group p-4 rounded-xl bg-white border border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                >
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-300 mb-2">
+                      {category.icon}
+                    </div>
+                    <h4 className="text-sm sm:text-base font-bold text-black group-hover:text-blue-600 transition-colors duration-300 mb-1">
+                      {category.name}
+                    </h4>
+                    <p className="text-xs text-yellow-600 font-semibold">
+                      {category.offers.split(' +')[0]}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Call to Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              viewport={{ once: true }}
+              className="flex flex-col sm:flex-row gap-4 lg:gap-6"
             >
               <motion.a
                 whileHover={{ 
@@ -408,11 +244,63 @@ export default function FlipkartProducts() {
                   boxShadow: "0 20px 40px rgba(255, 193, 7, 0.4)"
                 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg shadow-xl hover:shadow-yellow-500/50 transition-all duration-300 btn-hover-lift" href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" target="_blank" rel="noopener noreferrer"
+                className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-lg font-bold text-base lg:text-lg shadow-xl hover:shadow-yellow-500/50 transition-all duration-300 inline-flex items-center justify-center" 
+                href="https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
               >
                 Explore All Categories
               </motion.a>
+              
+              <motion.a
+                whileHover={{ 
+                  scale: 1.02,
+                  backgroundColor: "rgba(59, 130, 246, 0.1)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                className="border-2 border-blue-500 text-blue-600 hover:text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-lg font-semibold text-base lg:text-lg hover:bg-blue-50 transition-all duration-300" 
+                href="https://www.flipkart.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Shop Now
+              </motion.a>
             </motion.div>
+
+            {/* Product Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-3 gap-4 lg:gap-8 pt-6 lg:pt-8"
+            >
+              <div className="text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-500">200M+</div>
+                <div className="text-xs sm:text-sm text-black/60">Products</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-500">80+</div>
+                <div className="text-xs sm:text-sm text-black/60">Categories</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-500">24/7</div>
+                <div className="text-xs sm:text-sm text-black/60">Support</div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Side - Product Showcase */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
+            whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 1.2, delay: 0.5 }}
+            viewport={{ once: true }}
+            className="w-full h-[400px] sm:h-[500px] lg:h-[600px] order-1 lg:order-2 flex items-center justify-center"
+          >
+            <div className="w-full h-full bg-gradient-to-br from-blue-50 to-white rounded-2xl lg:rounded-3xl border border-blue-200 shadow-xl p-4 sm:p-6 lg:p-8 flex items-center justify-center">
+              <Products />
+            </div>
           </motion.div>
         </div>
       </div>

@@ -1,106 +1,8 @@
 'use client'
 
-import React, { useRef, Suspense } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, Box, Sphere, Environment } from '@react-three/drei'
+import React, { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import * as THREE from 'three'
-import LoadingFallback from './LoadingFallback'
-
-// Optimized 3D Sale Tags and Offer Boxes
-function SaleTag3D({ position, color }: { position: [number, number, number], color: string }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.2
-      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 1) * 0.05
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.1
-    }
-  })
-
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={0.5}>
-      <group ref={meshRef} position={position}>
-        {/* Sale Tag Shape - Simplified */}
-        <Box args={[1.5, 0.8, 0.1]}>
-          <meshStandardMaterial color={color} metalness={0.2} roughness={0.8} />
-        </Box>
-      </group>
-    </Float>
-  )
-}
-
-function OfferBox3D({ position, color }: { position: [number, number, number], color: string }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.8) * 0.1
-      meshRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 1.5) * 0.08
-    }
-  })
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-      <group ref={meshRef} position={position}>
-        {/* Offer Box - Simplified */}
-        <Box args={[2, 1.2, 0.3]}>
-          <meshStandardMaterial color={color} metalness={0.5} roughness={0.5} />
-        </Box>
-        {/* Flipkart Logo */}
-        <Box args={[1.5, 0.2, 0.05]} position={[0, 0.4, 0.16]}>
-          <meshStandardMaterial color="#2874f0" />
-        </Box>
-      </group>
-    </Float>
-  )
-}
-
-function CoinEffect({ position }: { position: [number, number, number] }) {
-  const meshRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 1.5
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.06
-    }
-  })
-
-  return (
-    <Float speed={3} rotationIntensity={2} floatIntensity={0.3}>
-      <group ref={meshRef} position={position}>
-        {/* Coin - Simplified */}
-        <Sphere args={[0.3, 16, 8]}>
-          <meshStandardMaterial color="#ffd700" metalness={0.8} roughness={0.2} />
-        </Sphere>
-      </group>
-    </Float>
-  )
-}
-
-// Optimized Scene with reduced lighting for better performance
-function OffersScene() {
-  return (
-    <>
-      <Environment preset="city" />
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[8, 8, 5]} intensity={1} />
-      <pointLight position={[-8, -8, -5]} intensity={0.5} color="#ff6b00" />
-      
-      <SaleTag3D position={[-3, 2, 0]} color="#ff4444" />
-      <SaleTag3D position={[3, 1, -1]} color="#ff6b00" />
-      <SaleTag3D position={[0, -1, 2]} color="#ff0066" />
-      
-      <OfferBox3D position={[-2, -2, 1]} color="#2874f0" />
-      <OfferBox3D position={[2, 2, -2]} color="#ff6b00" />
-      
-      <CoinEffect position={[-1, 3, 1]} />
-      <CoinEffect position={[1, -3, -1]} />
-      <CoinEffect position={[3, 0, 1]} />
-    </>
-  )
-}
+import { Offers } from '@/components/elements/Offers'
 
 export default function FlipkartOffers() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -189,111 +91,98 @@ export default function FlipkartOffers() {
           </motion.div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-12 sm:mb-16 lg:mb-20">
-          
-          {/* 3D Offers Scene - Mobile Optimized */}
-          {/* 3D Offers Scene - Optimized for Performance */}
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="h-[350px] sm:h-[450px] lg:h-[600px] rounded-2xl lg:rounded-3xl bg-blue-50 border border-blue-200 shadow-xl lg:shadow-2xl overflow-hidden order-2 lg:order-1"
-          >
-            <Suspense fallback={<LoadingFallback />}>
-              <Canvas
-                camera={{ position: [0, 0, 10], fov: 50 }}
-                gl={{ 
-                  antialias: false,
-                  alpha: true,
-                  powerPreference: "high-performance",
-                  stencil: false
-                }}
-                dpr={[1, 1.5]} // Limit pixel ratio for better performance
-                performance={{ min: 0.5 }} // Adaptive performance
-              >
-                <OffersScene />
-              </Canvas>
-            </Suspense>
-          </motion.div>
+        {/* Main Offers Showcase - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+          className="mb-12 sm:mb-16 lg:mb-20"
+        >
+          <div className="bg-gradient-to-br from-yellow-50 to-white rounded-2xl lg:rounded-3xl border border-yellow-200 shadow-xl overflow-hidden">
+            <div className="h-[400px] sm:h-[500px] lg:h-[600px] w-full">
+              <Offers />
+            </div>
+          </div>
+        </motion.div>
 
-          {/* Offer Categories */}
-          <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="space-y-4 sm:space-y-6 order-1 lg:order-2"
-          >
-            {offers.map((offer, index) => (
-              <motion.div
-                key={offer.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ 
-                  scale: 1.02,
-                  x: 5,
-                  transition: { duration: 0.3 }
-                }}
-                className="group p-4 sm:p-6 rounded-xl lg:rounded-2xl bg-white border border-gray-200 hover:border-yellow-500 hover:shadow-xl transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                    {offer.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-lg sm:text-xl font-bold text-black mb-1 sm:mb-2 truncate">
-                      {offer.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-black/70 group-hover:text-black transition-colors duration-300 mb-2 sm:mb-3 line-clamp-2">
-                      {offer.description}
-                    </p>
-                    <div className="space-y-1">
-                      <div className="text-base sm:text-lg font-bold text-red-600">
-                        {offer.discount}
-                      </div>
-                      <div className="text-xs sm:text-sm text-green-600 font-semibold">
-                        {offer.extra}
-                      </div>
+        {/* Offers Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-12 sm:mb-16 lg:mb-20"
+        >
+          {offers.map((offer, index) => (
+            <motion.div
+              key={offer.title}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ 
+                scale: 1.02,
+                y: -5,
+                transition: { duration: 0.3 }
+              }}
+              className="group p-4 sm:p-6 rounded-xl lg:rounded-2xl bg-white border border-gray-200 hover:border-yellow-500 hover:shadow-xl transition-all duration-300 cursor-pointer"
+            >
+              <div className="flex items-start space-x-3 sm:space-x-4">
+                <div className="text-2xl sm:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  {offer.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg sm:text-xl font-bold text-black mb-1 sm:mb-2 truncate">
+                    {offer.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-black/70 group-hover:text-black transition-colors duration-300 mb-2 sm:mb-3 line-clamp-2">
+                    {offer.description}
+                  </p>
+                  <div className="space-y-1">
+                    <div className="text-base sm:text-lg font-bold text-red-600">
+                      {offer.discount}
+                    </div>
+                    <div className="text-xs sm:text-sm text-green-600 font-semibold">
+                      {offer.extra}
                     </div>
                   </div>
                 </div>
-                
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{ duration: 1.5, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className={`h-1 bg-gradient-to-r ${offer.color} rounded-full mt-3 sm:mt-4`}
-                />
-              </motion.div>
-            ))}
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              viewport={{ once: true }}
-              className="pt-4 sm:pt-6"
-            >
-              <motion.a
-                whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(239, 68, 68, 0.4)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-red-500 to-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl lg:rounded-2xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-red-500/50 transition-all duration-300 btn-hover-lift"
-                href="https://www.flipkart.com/offers-store"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Explore All Offers
-              </motion.a>
+              </div>
+              
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 1.5, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                className={`h-1 bg-gradient-to-r ${offer.color} rounded-full mt-3 sm:mt-4`}
+              />
             </motion.div>
-          </motion.div>
-        </div>
+          ))}
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
+        >
+          <motion.a
+            whileHover={{ 
+              scale: 1.02,
+              boxShadow: "0 20px 40px rgba(239, 68, 68, 0.4)"
+            }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-block bg-gradient-to-r from-red-500 to-orange-600 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl font-bold text-lg sm:text-xl shadow-xl hover:shadow-red-500/50 transition-all duration-300"
+            href="https://www.flipkart.com/offers-store"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explore All Offers
+          </motion.a>
+        </motion.div>
 
         {/* Flipkart Stats - Mobile Grid */}
         <motion.div

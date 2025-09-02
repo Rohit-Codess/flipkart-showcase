@@ -3,6 +3,7 @@
 import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/Loading'
+import { FlipkartTopHero } from '@/components/elements/FlipkartTopHero'
 
 // Optimized dynamic imports with better loading strategies
 const FlipkartHero = dynamic(() => import('@/components/FlipkartHero'), {
@@ -33,10 +34,15 @@ const FlipkartEcosystem = dynamic(() => import('@/components/FlipkartEcosystem')
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Load hero immediately */}
-      <FlipkartHero />
-      
       {/* Load other sections progressively */}
+      <Suspense fallback={<div className="h-16 bg-gradient-to-r from-blue-50 to-purple-50 animate-pulse" />}>
+        <FlipkartTopHero />
+      </Suspense>
+
+      <Suspense fallback={<div className="h-16 bg-gradient-to-r from-blue-50 to-purple-50 animate-pulse" />}>
+        <FlipkartHero />
+      </Suspense>
+
       <Suspense fallback={<div className="h-16 bg-gradient-to-r from-blue-50 to-purple-50 animate-pulse" />}>
         <FlipkartProducts />
       </Suspense>
