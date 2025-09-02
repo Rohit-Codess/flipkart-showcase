@@ -6,11 +6,11 @@ import Image from "next/image";
 export function Shopping() {
   const images = [
     "/shopping1.avif",
-    // "/shopping2.jpg", 
+    "/shopping2.jpg", 
     "/shopping3.png",
-    // "/shopping4.avif",
+    "/shopping4.avif",
     "/shopping5.avif",
-    // "/shopping6.jpg"
+    "/shopping6.jpg"
   ];
 
   return (
@@ -21,10 +21,7 @@ export function Shopping() {
           {images.map((image, index) => (
             <div
               key={index}
-              className={`relative overflow-hidden rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group ${
-                index === 0 ? 'col-span-2 md:col-span-1 md:row-span-2' : 
-                index === 4 ? 'col-span-2 md:col-span-1' : ''
-              }`}
+              className={`relative overflow-hidden rounded-xl md:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-110`}
             >
               <Image
                 src={image}
