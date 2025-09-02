@@ -1,6 +1,6 @@
 "use client";
 import { animate, motion } from "motion/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { GoCopilot } from "react-icons/go";
 
@@ -20,57 +20,58 @@ export default function CardDemo() {
 }
 
 const Skeleton = () => {
-  const scale = [1, 1.1, 1];
-  const transform = ["translateY(0px)", "translateY(-4px)", "translateY(0px)"];
-  const sequence = [
-    [
-      ".circle-1",
-      {
-        scale,
-        transform,
-      },
-      { duration: 0.8 },
-    ],
-    [
-      ".circle-2",
-      {
-        scale,
-        transform,
-      },
-      { duration: 0.8 },
-    ],
-    [
-      ".circle-3",
-      {
-        scale,
-        transform,
-      },
-      { duration: 0.8 },
-    ],
-    [
-      ".circle-4",
-      {
-        scale,
-        transform,
-      },
-      { duration: 0.8 },
-    ],
-    [
-      ".circle-5",
-      {
-        scale,
-        transform,
-      },
-      { duration: 0.8 },
-    ],
-  ];
-
   useEffect(() => {
+    const scale = [1, 1.1, 1];
+    const transform = ["translateY(0px)", "translateY(-4px)", "translateY(0px)"];
+    
+    const sequence = [
+      [
+        ".circle-1",
+        {
+          scale,
+          transform,
+        },
+        { duration: 0.8 },
+      ],
+      [
+        ".circle-2",
+        {
+          scale,
+          transform,
+        },
+        { duration: 0.8 },
+      ],
+      [
+        ".circle-3",
+        {
+          scale,
+          transform,
+        },
+        { duration: 0.8 },
+      ],
+      [
+        ".circle-4",
+        {
+          scale,
+          transform,
+        },
+        { duration: 0.8 },
+      ],
+      [
+        ".circle-5",
+        {
+          scale,
+          transform,
+        },
+        { duration: 0.8 },
+      ],
+    ];
+
+    // Animation with proper typing
     animate(sequence, {
-      // @ts-ignore
       repeat: Infinity,
       repeatDelay: 1,
-    });
+    } as Parameters<typeof animate>[1]);
   }, []);
   return (
     <div className="p-8 overflow-hidden h-full relative flex items-center justify-center">
