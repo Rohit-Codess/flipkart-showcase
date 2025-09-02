@@ -21,7 +21,7 @@ function FlipkartPhone({ position }: { position: [number, number, number] }) {
 
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.3}>
-      <group ref={meshRef} position={position}>
+      <group ref={meshRef} position={position} scale={0.7}>
         {/* Phone Body - Simplified */}
         <Box args={[1, 2, 0.1]}>
           <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.2} />
@@ -51,7 +51,7 @@ function FlipkartLaptop({ position }: { position: [number, number, number] }) {
 
   return (
     <Float speed={1} rotationIntensity={1} floatIntensity={0.5}>
-      <group ref={meshRef} position={position}>
+      <group ref={meshRef} position={position} scale={0.7}>
         {/* Laptop Screen - Simplified */}
         <Box args={[2.5, 1.8, 0.1]} position={[0, 0.5, 0]}>
           <meshStandardMaterial color="#2d3748" metalness={0.7} roughness={0.3} />
@@ -85,7 +85,7 @@ function FlipkartHeadphones({ position }: { position: [number, number, number] }
 
   return (
     <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.6}>
-      <group ref={meshRef} position={position}>
+      <group ref={meshRef} position={position} scale={0.7}>
         {/* Left Ear Cup - Simplified */}
         <Sphere args={[0.6]} position={[-0.8, 0, 0]}>
           <meshStandardMaterial color="#ff6b6b" metalness={0.2} roughness={0.8} />
@@ -115,7 +115,7 @@ function FlipkartWatch({ position }: { position: [number, number, number] }) {
 
   return (
     <Float speed={2} rotationIntensity={0.5} floatIntensity={0.4}>
-      <group ref={meshRef} position={position}>
+      <group ref={meshRef} position={position} scale={0.7}>
         {/* Watch Face - Simplified */}
         <Box args={[0.8, 1, 0.3]}>
           <meshStandardMaterial color="#ffd700" metalness={0.8} roughness={0.2} />
@@ -171,7 +171,7 @@ export default function FlipkartHero() {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 min-h-screen flex items-center py-8 sm:py-12">
+      <div className="relative z-10 min-h-screen flex items-center sm:py-2 md:py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
@@ -283,7 +283,7 @@ export default function FlipkartHero() {
               initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1.2, delay: 0.5 }}
-              className="h-[100vh] perspective-500 lg:perspective-1000 order-1 lg:order-2"
+              className="w-full aspect-square max-h-[70vh] perspective-500 lg:perspective-1000 order-1 lg:order-2"
               style={{
                 transform: `rotateX(${mousePosition.y * 1}deg) rotateY(${mousePosition.x * 1}deg)`
               }}
@@ -291,7 +291,8 @@ export default function FlipkartHero() {
               <Suspense fallback={<LoadingFallback />}>
                 <Canvas
                   camera={{ position: [0, 0, 8], fov: 50 }}
-                  className="rounded-2xl lg:rounded-3xl bg-gradient-to-br from-white/10 to-blue-500/20 backdrop-blur-sm border border-white/20"
+                  className="rounded-2xl lg:rounded-3xl bg-gradient-to-br from-white/10 to-blue-500/20 backdrop-blur-sm border border-white/20 w-full h-full"
+                  style={{ width: '100%', height: '100%' }}
                   gl={{ 
                     antialias: false,
                     alpha: true,
