@@ -3,6 +3,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Custom animations for mobile products */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(12deg);
+  }
+  100% {
+    transform: translateX(100%) skewX(12deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
 :root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -141,6 +155,78 @@ html {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Horizontal scroll container with snap */
+.horizontal-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Snap scroll for mobile cards */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-center {
+  scroll-snap-align: center;
+}
+
+/* Mobile card optimizations */
+.mobile-card {
+  min-width: 16rem; /* 256px */
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .mobile-card {
+    min-width: 18rem; /* 288px */
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-card {
+    min-width: 20rem; /* 320px */
+  }
+}
+
+/* Horizontal scroll indicator */
+.scroll-indicator {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(59, 130, 246, 0.2) 50%, 
+    transparent 100%);
+  animation: scroll-hint 3s ease-in-out infinite;
+}
+
+@keyframes scroll-hint {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Touch-friendly scrolling for mobile */
+@media (max-width: 768px) {
+  .horizontal-scroll {
+    scroll-padding: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-card {
+    margin-right: 1rem;
+  }
+  
+  .mobile-card:last-child {
+    margin-right: 2rem;
+  }
 }
 
 /* Mobile-first glassmorphism effect */

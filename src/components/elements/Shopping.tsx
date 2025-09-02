@@ -5,12 +5,12 @@ import Image from "next/image";
 
 export function Shopping() {
   const images = [
-    "/shopping1.avif",
-    "/shopping2.jpg", 
-    "/shopping3.png",
-    "/shopping4.avif",
-    "/shopping5.avif",
-    "/shopping6.jpg"
+    "/Shopping/shopping1.avif",
+    "/Shopping/shopping2.jpg", 
+    "/Shopping/shopping3.png",
+    "/Shopping/shopping4.avif",
+    "/Shopping/shopping5.avif",
+    "/Shopping/shopping6.jpg"
   ];
 
   return (
