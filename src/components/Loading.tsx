@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-gradient-to-br from-white to-black flex items-center justify-center z-50">
       <div className="text-center">
         <motion.div
           className="relative"

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { ContainerScroll } from "../ui/container-scroll-animation";
 
 export function FlipkartTopHero() {
@@ -17,8 +18,8 @@ export function FlipkartTopHero() {
           </>
         }
       >
-        <img
-          src={`/flipkart-page.png`}
+        <Image
+          src="/flipkart-page.png"
           alt="flipkart"
           height={720}
           width={1400}
